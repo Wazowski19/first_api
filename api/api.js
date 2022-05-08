@@ -1,8 +1,10 @@
 import express from "express";
-import { application } from "express";
+import empleadoRoutes from './routes/empleados.js'
 
 const api = express();
 api.use(express.json());
+
+api.use(empleadoRoutes);
 
 /* api.get('/top50', (req, res) =>{
     return res.send('1.-Gamma State, 2.-La Chona');
@@ -54,41 +56,35 @@ api.post('/max', (req,res) =>{
 }) */
 
 
-/* 
-    get (consulta)      /empleados / empleados/:id
-    post (crear)        /empleados
-    put (actualizar)    /empleados /:id
-    delete (borrar)     /empleados /:id
-
-*/
-
-api.get('/empleados', (req, res) =>{
+/* api.get('/peliculas', (req, res) =>{
     return res.json({
         msg: 'Ruta en desarrollo'
     })
-    //TODO: Regresar varios empleados (Todos o filtrados o en orden etc)
+    //TODO: Regresar varias peliculas (Todos o filtrados o en orden etc)
 
 });
 
-api.get('/empleados/:id', (req, res) =>{
+api.get('/peliculas/:id', (req, res) =>{
     const params = req.params
     res.json({
         params,
     })
-    //TODO Regresar un empleado en especifico
+    //TODO Regresar una pelicula en especifico
 });
 
-api.post('/empleados', (req, res) =>{
-    //TODO: Crear un nuevo empleado
+api.post('/peliculas', (req, res) =>{
+    //TODO: Crear una nueva pelicula
 })
 
-api.put('/empleados/:id', (req, res)=>{
-    //TODO: Actualizar un empleado
+api.put('/peliculas/:id', (req, res)=>{
+    //TODO: Actualizar una pelicula
 })
 
-api.delete('/empleados/:id', (req, res) =>{
-    //TODO: Eliminar un empleado
-})
+api.delete('/peliculas/:id', (req, res) =>{
+    //TODO: Eliminar una peliculas
+}) */
+
+
 
 
 export default api;
