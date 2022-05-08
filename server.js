@@ -1,45 +1,36 @@
 import http from "http";
-import express from "express";
+import api from './api/api.js'
 
-const api = express();
-
-api.get('/top50', (req, res) =>{
-    return res.send('1.-Gamma State, 2.-La Chona');
-});
-
-//Query con params
-
-api.get('/mayus', (req, res)=>{
-    const cadena = req.query.s;
-    console.log(cadena); 
-    if(cadena.length > 10){
-        return res.send('Error la cadena es mayor a 10 caracteres')
-    }
-    
-    return res.json({
-        mayus: cadena.toUpperCase(),
-
-    })
-});
-
-api.get('/suma', (req,res) =>{
-    //TO DO: falta configurar el req.body
-    const body = req.body;
-    console.log(body);
-
-    const a = 1;
-    const b = 2;
-    return res.send(`${a + b}`);
-})
+const port = 4000;
 
 const server = http.createServer(api);
 
-server.listen(4000);
+server.on('listening', onlistening)
+server.on('error', onError)
 
-server.on('listening', ()=>{
-    console.log('Servidor escuchando');
-})
 
-server.on('error', ()=>{
-    console.error('Ha ocurrido un error');
-})
+function onlistening(){
+    const addr = server.address();
+    const bind = typeof addr === 'string' ? `pipe ${addr}` :  `port ${addr.port}`;
+    console.log(`Servidor escuchando en ${bind}`);
+}
+
+function onError(error){
+    switch(error.code){
+        case 'EACCES':
+            console.error('El sistema no tiene permisos suicientes');
+            process.exit(1);
+            break;
+
+        case 'EADDRINUSE':
+            console.error('El perto con esa dirección ya están siendo usados');
+            process.exit(1);
+            break; 
+        
+        default: 
+            throw error;
+            throw error;
+    }
+}
+
+server.listen(port);
