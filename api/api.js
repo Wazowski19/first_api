@@ -1,9 +1,11 @@
 import express from "express";
 import empleadoRoutes from './routes/empleados.js'
+import { logger } from "./middlewares/mayus.js";
 
 const api = express();
 api.use(express.json());
 
+api.use(logger);
 api.use(empleadoRoutes);
 
 /* api.get('/top50', (req, res) =>{
@@ -84,7 +86,11 @@ api.delete('/peliculas/:id', (req, res) =>{
     //TODO: Eliminar una peliculas
 }) */
 
-
+api.post('/prueba', (req, res) =>{
+    return res.json({
+        body: req.body,
+    })
+})
 
 
 export default api;
