@@ -29,7 +29,7 @@ function onError(error){
         
         default: 
             throw error;
-            throw error;
+
     }
 }
 

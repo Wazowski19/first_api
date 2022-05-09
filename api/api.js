@@ -1,12 +1,20 @@
 import express from "express";
-import empleadoRoutes from './routes/empleados.js'
+
+//Rutas
+import empleadoRoutes from './routes/empleados.js';
+import mascotasRoutes from './routes/mascotas.js'; 
+
+//Middlewares
 import { logger } from "./middlewares/mayus.js";
+import mascotaValidator from "./middlewares/validator.js"
 
 const api = express();
 api.use(express.json());
 
 api.use(logger);
 api.use(empleadoRoutes);
+
+api.use(mascotaValidator, mascotasRoutes);
 
 /* api.get('/top50', (req, res) =>{
     return res.send('1.-Gamma State, 2.-La Chona');
