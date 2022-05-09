@@ -1,4 +1,5 @@
 const getEmpleados = (req, res, next) =>{
+
     return res.json({
         msg: 'Ruuta de get empleados',
         body: req.body

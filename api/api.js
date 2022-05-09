@@ -6,7 +6,7 @@ import mascotasRoutes from './routes/mascotas.js';
 
 //Middlewares
 import { logger } from "./middlewares/mayus.js";
-import mascotaValidator from "./middlewares/validator.js"
+
 
 const api = express();
 api.use(express.json());
@@ -14,7 +14,7 @@ api.use(express.json());
 api.use(logger);
 api.use(empleadoRoutes);
 
-api.use(mascotaValidator, mascotasRoutes);
+api.use(mascotasRoutes);
 
 /* api.get('/top50', (req, res) =>{
     return res.send('1.-Gamma State, 2.-La Chona');
@@ -95,10 +95,28 @@ api.delete('/peliculas/:id', (req, res) =>{
 }) */
 
 api.post('/prueba', (req, res) =>{
-    return res.json({
-        body: req.body,
-    })
+    const {bandera} = req.body;
+    if(bandera)
+        return res.json({
+            body: req.body,
+        });
+
+    throw new Error('bandera es falsa')
 })
 
+
+api.use((err, req, res, next)=>{
+    if(err instanceof SyntaxError && err.status === 400 & 'body' in err){
+        console.error(err);
+        return res
+            .status(400)
+            .json({
+                msg: 'Bad Json body'
+            }); //Bad request
+    }
+    return res.json({
+        msg: 'Error',
+    });
+})
 
 export default api;
